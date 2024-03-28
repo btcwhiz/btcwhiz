@@ -1,9 +1,6 @@
-# Blockchain Specialist
+# <a href="https://github.com/BestSilverTiger/About-Me">Blockchain Specialist</a>
 
 Experienced in Blockchain development for 10+ years. Currently working as a Fullstack blockchain developer.<br/>
-
-<a href="https://github.com/BestSilverTiger/About-Me">About Me</a>
-<br/>
 
 
 ![](https://img.shields.io/badge/Network-BitCoin-informational?style=flat&logo=bitcoin&logoColor=white&color=3bac3a)
