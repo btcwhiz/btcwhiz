@@ -1,5 +1,9 @@
 # <a href="https://github.com/btcwhiz/About-Me">Blockchain Specialist</a>
 
+This is Kala. We've worked together in the past company before. Do you remember me? My nick name was Charley Star and your nick name was Panther at that time. 
+If you remember me, can you please ping me to my telegram: @kalatechlabs . If you are not, sorry for bothering you.
+Best Regards.
+
 ![](https://img.shields.io/badge/Network-BitCoin-informational?style=flat&logo=bitcoin&logoColor=white&color=3bac3a)
 ![](https://img.shields.io/badge/Network-Ethereum-informational?style=flat&logo=ethereum&logoColor=white&color=3bac3a)
 ![](https://img.shields.io/badge/Language-Solidity-informational?style=flat&logo=solidity&logoColor=white&color=3bac3a)
