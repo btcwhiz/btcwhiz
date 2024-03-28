@@ -1,7 +1,4 @@
-# <a href="https://github.com/BestSilverTiger/About-Me">Blockchain Specialist</a>
-
-Experienced in Blockchain development for 10+ years. Currently working as a Fullstack blockchain developer.<br/>
-
+# <a href="https://github.com/btcwhiz/About-Me">Blockchain Specialist</a>
 
 ![](https://img.shields.io/badge/Network-BitCoin-informational?style=flat&logo=bitcoin&logoColor=white&color=3bac3a)
 ![](https://img.shields.io/badge/Network-Ethereum-informational?style=flat&logo=ethereum&logoColor=white&color=3bac3a)
@@ -73,8 +70,8 @@ Experienced in Blockchain development for 10+ years. Currently working as a Full
    </tr>
   </table>
 
-<img align="left" src="https://visitor-badge.laobi.icu/badge?page_id=BestSilverTiger.BestSilverTiger" />
-<img align="right" src="https://img.shields.io/github/followers/BestSilverTiger?label=Follow&style=social" />
+<img align="left" src="https://visitor-badge.laobi.icu/badge?page_id=btcwhiz.btcwhiz" />
+<img align="right" src="https://img.shields.io/github/followers/btcwhiz?label=Follow&style=social" />
 <h1 align="center"></h1>
-<img align="left" height="150px" src="https://github-readme-stats.vercel.app/api?username=BestSilverTiger&show_icons=true&theme=merko&count_private=true">
+<img align="left" height="150px" src="https://github-readme-stats.vercel.app/api?username=btcwhiz&show_icons=true&theme=merko&count_private=true">
 <img align="right" height="150px" src="https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&layout=compact&theme=merko&count_private=true">
