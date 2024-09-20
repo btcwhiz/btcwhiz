@@ -69,3 +69,5 @@
     <td><img src="https://cdn.iconscout.com/icon/free/png-64/angular-3-226070.png" width="100"></td>
    </tr>
   </table>
+<img align="left" src="https://visitor-badge.laobi.icu/badge?page_id=btcwhiz.btcwhiz" />
+<img align="right" src="https://img.shields.io/github/followers/btcwhiz?label=Follow&style=social" />
