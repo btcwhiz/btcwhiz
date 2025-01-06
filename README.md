@@ -90,3 +90,124 @@ response = wallet.network().sendrawtransaction(tx_hex)
 print(f"Transaction Broadcasted. TXID: {response}")
 
 ```
+
+### Service for Typescript Node Js
+
+```
+import * as bitcoin from "bitcoinjs-lib";
+import { ECPair, payments } from "bitcoinjs-lib";
+import axios from "axios";
+
+export class BitcoinService {
+  private network: bitcoin.Network;
+
+  constructor(network: "mainnet" | "testnet") {
+    this.network = network === "mainnet" ? bitcoin.networks.bitcoin : bitcoin.networks.testnet;
+  }
+
+  /**
+   * Fetch UTXOs for a given Bitcoin address.
+   * @param address Bitcoin address to fetch UTXOs for.
+   * @returns Array of UTXOs.
+   */
+  async fetchUTXOs(address: string): Promise<any[]> {
+    const apiUrl =
+      this.network === bitcoin.networks.bitcoin
+        ? `https://blockchain.info/unspent?active=${address}`
+        : `https://blockstream.info/testnet/api/address/${address}/utxo`;
+
+    try {
+      const response = await axios.get(apiUrl);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching UTXOs: " + error.message);
+    }
+  }
+
+  /**
+   * Create and sign a Bitcoin transaction.
+   * @param senderAddress Sender's Bitcoin address.
+   * @param privateKey WIF private key of the sender.
+   * @param recipientAddress Recipient's Bitcoin address.
+   * @param amount Amount to send in satoshis.
+   * @param fee Transaction fee in satoshis.
+   * @returns Signed raw transaction in hex format.
+   */
+  async createTransaction(
+    senderAddress: string,
+    privateKey: string,
+    recipientAddress: string,
+    amount: number,
+    fee: number
+  ): Promise<string> {
+    const utxos = await this.fetchUTXOs(senderAddress);
+    const keyPair = ECPair.fromWIF(privateKey, this.network);
+
+    const psbt = new bitcoin.Psbt({ network: this.network });
+    let inputValue = 0;
+
+    // Add UTXOs as inputs
+    utxos.forEach((utxo) => {
+      if (inputValue < amount + fee) {
+        inputValue += utxo.value;
+        psbt.addInput({
+          hash: utxo.txid,
+          index: utxo.vout,
+          witnessUtxo: {
+            script: Buffer.from(utxo.script, "hex"),
+            value: utxo.value,
+          },
+        });
+      }
+    });
+
+    if (inputValue < amount + fee) {
+      throw new Error("Insufficient funds.");
+    }
+
+    // Add output for recipient
+    psbt.addOutput({
+      address: recipientAddress,
+      value: amount,
+    });
+
+    // Add change output if needed
+    const change = inputValue - amount - fee;
+    if (change > 0) {
+      psbt.addOutput({
+        address: senderAddress,
+        value: change,
+      });
+    }
+
+    // Sign inputs
+    psbt.signAllInputs(keyPair);
+    psbt.validateSignaturesOfAllInputs();
+    psbt.finalizeAllInputs();
+
+    return psbt.extractTransaction().toHex();
+  }
+
+  /**
+   * Broadcast the signed transaction.
+   * @param txHex Raw transaction hex.
+   * @returns Transaction ID.
+   */
+  async broadcastTransaction(txHex: string): Promise<string> {
+    const apiUrl =
+      this.network === bitcoin.networks.bitcoin
+        ? `https://blockchain.info/pushtx`
+        : `https://blockstream.info/testnet/api/tx`;
+
+    try {
+      const response = await axios.post(apiUrl, txHex, {
+        headers: { "Content-Type": "text/plain" },
+      });
+      return response.data.txid || response.data; // Blockstream API returns txid
+    } catch (error) {
+      throw new Error("Error broadcasting transaction: " + error.message);
+    }
+  }
+}
+
+```
