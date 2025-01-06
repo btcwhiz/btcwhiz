@@ -20,6 +20,73 @@
         src="https://img.shields.io/badge/Skype-230077B5?style=for-the-badge&logo=skype&logoColor=white"/></a>
    
 </p>
+## Need More Details? <a href="https://github.com/btcwhiz/About-Me">Here</a>
 -->
 
-## Need More Details? <a href="https://github.com/btcwhiz/About-Me">Here</a>
+### Here you go for my bitcoin tech
+
+```
+from bitcoinlib.wallets import Wallet
+from bitcoinlib.transactions import Transaction, Output, Input
+from bitcoinlib.encoding import address_to_scriptpubkey, decode
+
+# Configurable parameters
+WALLET_NAME = "My Wallet Name"
+SENDER_ADDRESS = "sender_address_here"
+RECIPIENT_ADDRESS = "recipient_address_here"
+SENDER_PRIVATE_KEY = "private_key_here"  # WIF format
+NETWORK = "bitcoin"  # Use "testnet" for testing
+AMOUNT_TO_SEND = 0.001  # BTC
+FEE = 0.0001  # BTC
+
+# Create or load wallet
+wallet = Wallet.create(WALLET_NAME, keys=SENDER_PRIVATE_KEY, network=NETWORK, witness_type='segwit')
+sender_key = wallet.get_key(SENDER_ADDRESS)
+
+# Fetch unspent transactions (UTXOs)
+utxos = wallet.utxos_update()
+if not utxos:
+    raise ValueError("No UTXOs available for the sender address.")
+
+# Select UTXOs to cover the transaction amount and fee
+selected_utxos = []
+total_input_value = 0
+for utxo in utxos:
+    selected_utxos.append(utxo)
+    total_input_value += utxo.value
+    if total_input_value >= AMOUNT_TO_SEND + FEE:
+        break
+
+if total_input_value < AMOUNT_TO_SEND + FEE:
+    raise ValueError("Insufficient funds to cover the transaction amount and fee.")
+
+# Create outputs
+outputs = [
+    Output(AMOUNT_TO_SEND, address_to_scriptpubkey(RECIPIENT_ADDRESS, network=NETWORK))
+]
+
+# Add change output if there's leftover input value
+change = total_input_value - AMOUNT_TO_SEND - FEE
+if change > 0:
+    outputs.append(Output(change, address_to_scriptpubkey(SENDER_ADDRESS, network=NETWORK)))
+
+# Create transaction
+tx = Transaction(network=NETWORK)
+for utxo in selected_utxos:
+    tx.inputs.append(Input(utxo.txid, utxo.vout))
+tx.outputs.extend(outputs)
+
+# Sign transaction
+tx.sign(sender_key.private_hex)
+
+# Verify transaction
+if not tx.verify():
+    raise ValueError("Transaction verification failed.")
+
+# Broadcast transaction
+tx_hex = tx.raw_hex()
+print(f"Raw Transaction Hex: {tx_hex}")
+response = wallet.network().sendrawtransaction(tx_hex)
+print(f"Transaction Broadcasted. TXID: {response}")
+
+```
