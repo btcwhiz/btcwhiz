@@ -1,5 +1,3 @@
-## 👋 Welcome to My GitHub Profile!
-
 ### 🔨 What I Do:
 - ✨ **Focus Areas**: Full-stack Development and Web3 technologies, specializing in **Bitcoin**, **EVM**, and **Solana** ecosystems.
 - 🌱 **Key Contributions**: Developed and launched several impactful projects leveraging the Bitcoin and Solana networks.
